@@ -1,4 +1,4 @@
-const onFunctionClick = (functionIndex) => {
+const onFunctionClick = (functionIndex, map) => {
 	window.dbclick = false;
 	//REMOVE GEOMETRICAL DISPLAYS
 	if (window.marker !== null) window.marker.setMap(null);
@@ -7,10 +7,12 @@ const onFunctionClick = (functionIndex) => {
 	window.polylineMarkers.map((marker) => marker.setMap(null));
 	window.path = [];
 	window.polygon.setMap(null);
-	if (window.intersectingPolygons.length !== 0)
-		window.intersectingPolygons.map((intersectingPolygon) =>
-			intersectingPolygon.setMap(null)
-		);
+	// if (window.intersectingPolygons.length !== 0)
+	// 	window.intersectingPolygons.map((intersectingPolygon) =>
+	// 		intersectingPolygon.setMap(null)
+	// 	);
+	if (window.features !== undefined)
+		map.data.clear();
 
 	// ENABLE SELF & REMOVE OTHER INFO DISPLAYS
 	let mapFunctionsArray = window.mapFunctions.current?.childNodes;

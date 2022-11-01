@@ -37,7 +37,7 @@ const polygonDbClick = async (args, map) => {
 
 	//CALCULATE & DISPLAY INTERSECTED POLYGON
 	if (window.mapFunctions.current?.childNodes[3].classList.contains("active")) {
-		const start = Date.now();
+		window.start = Date.now();
 		path = [...path, [path[0][0], path[0][1]]];
 		let coordinatesOnGridList = [];
 		let pathCells = [...new Set(window.pathCells)];
@@ -135,27 +135,45 @@ const polygonDbClick = async (args, map) => {
 
 		const FULL_GRID_RENDER_TIME = 20000;
 
+		window.duration = [];
+
 		let results = await Promise.all(
 			coordinatesOnGridList.map(async (coordinates) => {
 				return await arcgisIntersect(coordinates, path, map);
 			})
 		);
+		results = results.filter((n) => n);
+		const geo = {
+			type: "FeatureCollection",
+			features: results,
+			totalFeatures: results.length,
+			numberMatched: results.length,
+			numberReturned: results.length,
+			timeStamp: Date.now(),
+			crs: {
+				type: "name",
+				properties: { name: "urn:ogc:def:crs:EPSG::4326" },
+			},
+		};
+		console.log(geo);
+		window.features = map.data.addGeoJson(JSON.stringify(geo));
+		console.log(window.features)
 
-		console.log(results);
-		let end;
-		results.map((res) => {
-			if (res !== -1) end = res;
-		});
+		// console.log(results);
+		// let end;
+		// results.map((res) => {
+		// 	if (res !== -1) end = res;
+		// });
 
-		const duration = end - start;
-		const durationRatio = (duration / FULL_GRID_RENDER_TIME) * 100;
-		console.log(
-			"duration = " +
-				duration +
-				"ms (" +
-				durationRatio.toFixed(2) +
-				"% of total grid render time)"
-		);
+		// const duration = end - start;
+		// const durationRatio = (duration / FULL_GRID_RENDER_TIME) * 100;
+		// console.log(
+		// 	"duration = " +
+		// 		duration +
+		// 		"ms (" +
+		// 		durationRatio.toFixed(2) +
+		// 		"% of total grid render time)"
+		// );
 	}
 };
 
