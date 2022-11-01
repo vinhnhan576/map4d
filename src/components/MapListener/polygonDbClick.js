@@ -45,8 +45,10 @@ const polygonDbClick = async (args, map) => {
 		let y_max = [];
 		let y_min = [];
 		let x_max = [];
+		let finalCells = [];
 		if (!pathCells.includes(-1)) {
 			pathCells.map((cell) => {
+				finalCells.push(cell);
 				coordinatesOnGridList.push(...window.grid[cell].paths);
 				y_max.push(window.grid[cell].bound[0][0]);
 				x_min.push(window.grid[cell].bound[0][1]);
@@ -64,14 +66,15 @@ const polygonDbClick = async (args, map) => {
 			x_min = window.grid[window.grid.length - 1].bound[0][1];
 			y_max = window.grid[window.grid.length - 1].bound[0][0];
 		}
-		let test = [];
+
 		window.grid.map((gridCell, index) => {
 			let cellBound = gridCell.bound;
 			if (
 				cellBound[0][0] <= y_max &&
 				cellBound[0][1] >= x_min &&
 				cellBound[1][0] >= y_min &&
-				cellBound[1][1] <= x_max
+				cellBound[1][1] <= x_max &&
+				!finalCells.includes(index)
 			) {
 				let pathIntersect = false;
 				let insidePath = false;
@@ -121,7 +124,7 @@ const polygonDbClick = async (args, map) => {
 						insidePath = true;
 				}
 				if (gridCell.paths.length !== 0 && (pathIntersect || insidePath)) {
-					test.push(index);
+					finalCells.push(index);
 					coordinatesOnGridList.push(...gridCell.paths);
 				}
 			}
