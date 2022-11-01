@@ -11,7 +11,6 @@ import Intersect from "../MapFunctions/Intersect";
 import geometry from "../../data/Geometry.json";
 import DN from "../../data/DN_Publish.json";
 import AnPhu from "../../data/AnPhu_WGS84.json";
-import AnPhutxt from '../../data/AnPhu_WGS84.txt'
 
 import MarkerInfo from "../MapFunctionsInfo/MarkerInfo";
 import PolylineInfo from "../MapFunctionsInfo/PolylineInfo";
@@ -28,10 +27,12 @@ import optimizePolygons from "../../utils/optimizePolygons";
 import getOuterGrid from "../../utils/getOuterGrid";
 import divideGrid from "../../utils/divideGrid";
 import getCoordinatesList from "../../utils/getCoordinatesList";
+import { useEffect } from "react";
+import { useState } from "react";
+import filePartitioning from "../../utils/filePartitioning";
 
 function App() {
 	const map = useContext(Context);
-	// InsidePoly(1,2,3);
 	//INITIALIZE GLOBAL VARIABLES
 	window.mapFunctions = useRef(null);
 	window.markerInfo = useRef(null);
@@ -50,13 +51,38 @@ function App() {
 	window.pathCells = [];
 	window.dbclick = false;
 
+	// useEffect(() => {
+	// 	console.time("fetch time");
+	// 	fetch("http://localhost:5000/api/featureCollection")
+	// 		.then((res) => {
+	// 			if (res.ok) {
+	// 				return res.json();
+	// 			}
+	// 			throw res;
+	// 		})
+	// 		.then((data) => {
+	// 			console.log(...data);
+	// 			console.timeEnd("fetch time");
+	// 			// console.log(Date.now() - start);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("Error fetching test data: " + error);
+	// 		});
+	// }, []);
+
+	// let partitionedAnPhu = filePartitioning(AnPhu);
+	// console.log(partitionedAnPhu);
+
+	AnPhu.features = AnPhu.features.filter((element) => {
+		return element.geometry !== null;
+	});
+
 	// DRAW GEOMETRIES FROM JSON FILE
-	map.data.addGeoJson(JSON.stringify(geometry));
-	map.data.addGeoJson(JSON.stringify(DN));
-	map.data.addGeoJson(AnPhutxt);
+	// map.data.addGeoJson(JSON.stringify(geometry));
+	map.data.addGeoJson(JSON.stringify(AnPhu));
 
 	//GET POLYGON COORDINATES
-	let coordinatesList = getCoordinatesList(DN);
+	let coordinatesList = getCoordinatesList(AnPhu);
 	// coordinatesList = [...coordinatesList, ...getCoordinatesList(geometry)];
 
 	//OPTIMIZING POLYGONS WITH MORE THAN 4 APEXES

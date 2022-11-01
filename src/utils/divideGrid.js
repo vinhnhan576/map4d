@@ -2,7 +2,7 @@
 import getCenterLatlng from "./getCenterLatlng";
 import rectangleOverlap from "./rectangleOverlap";
 
-let MIN_POINTS = 80;
+let MIN_POINTS = 500;
 
 const divideGrid = (gridCell, map) => {
 	if (gridCell.paths.length <= MIN_POINTS) {
@@ -19,7 +19,7 @@ const divideGrid = (gridCell, map) => {
 			iconView: `<div style="width: 32px; height: 32px; text-align: center; color: red;font-weight:700;">${grid.length}</div>`,
 			anchor: [0.5, 0.5],
 		});
-		marker.setMap(map);
+		// marker.setMap(map);
 	} else {
 		//GET CELL BOUND
 		let y_max = gridCell.bound[0][0];

@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import lineIntersect from "../../utils/lineIntersection";
 import gridSearch from "../../utils/gridSearch";
-
-import { loadModules } from "esri-loader";
 import rectangleOverlap from "../../utils/rectangleOverlap";
 import arcgisIntersect from "../../utils/arcgisIntersect";
 
@@ -49,7 +47,7 @@ const polygonDbClick = async (args, map) => {
 		let x_max = [];
 		if (!pathCells.includes(-1)) {
 			pathCells.map((cell) => {
-				coordinatesOnGridList.push(window.grid[cell].paths);
+				coordinatesOnGridList.push(...window.grid[cell].paths);
 				y_max.push(window.grid[cell].bound[0][0]);
 				x_min.push(window.grid[cell].bound[0][1]);
 				x_max.push(window.grid[cell].bound[1][1]);
@@ -128,8 +126,9 @@ const polygonDbClick = async (args, map) => {
 				}
 			}
 		});
-		console.log("selected cells: " + test + " (" + test.length + ")");
+		console.log(coordinatesOnGridList);
 		coordinatesOnGridList = [...new Set(coordinatesOnGridList)];
+		console.log(coordinatesOnGridList);
 
 		const FULL_GRID_RENDER_TIME = 20000;
 
