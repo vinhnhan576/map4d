@@ -137,27 +137,27 @@ const polygonDbClick = async (args, map) => {
 
 		window.duration = [];
 
-		let results = await Promise.all(
+		// let results = await Promise.all(
 			coordinatesOnGridList.map(async (coordinates) => {
-				return await arcgisIntersect(coordinates, path, map);
+				return arcgisIntersect(coordinates, path, map);
 			})
-		);
-		results = results.filter((n) => n);
-		const geo = {
-			type: "FeatureCollection",
-			features: results,
-			totalFeatures: results.length,
-			numberMatched: results.length,
-			numberReturned: results.length,
-			timeStamp: Date.now(),
-			crs: {
-				type: "name",
-				properties: { name: "urn:ogc:def:crs:EPSG::4326" },
-			},
-		};
-		console.log(geo);
-		window.features = map.data.addGeoJson(JSON.stringify(geo));
-		console.log(window.features)
+		// );
+		// results = results.filter((n) => n);
+		// const geo = {
+		// 	type: "FeatureCollection",
+		// 	features: results,
+		// 	totalFeatures: results.length,
+		// 	numberMatched: results.length,
+		// 	numberReturned: results.length,
+		// 	timeStamp: Date.now(),
+		// 	crs: {
+		// 		type: "name",
+		// 		properties: { name: "urn:ogc:def:crs:EPSG::4326" },
+		// 	},
+		// };
+		// console.log(geo);
+		// window.features = map.data.addGeoJson(JSON.stringify(geo));
+		// console.log(window.features)
 
 		// console.log(results);
 		// let end;

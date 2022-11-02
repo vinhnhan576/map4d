@@ -28,28 +28,28 @@ function arcgisIntersect(coordinates, path, map) {
 				.then(function (result) {
 					if (result) {
 						// console.log("Found an Intersection!");
-						// let intersectingPolygon;
-						// intersectingPolygon = new map4d.Polygon({
-						// 	paths: result.rings,
-						// 	strokeWidth: 2,
-						// 	fillOpacity: 0.3,
-						// 	fillColor: "#ffffff",
-						// });
-						// intersectingPolygon.setMap(map);
-						// window.intersectingPolygons.push(intersectingPolygon);
+						let intersectingPolygon;
+						intersectingPolygon = new map4d.Polygon({
+							paths: result.rings,
+							strokeWidth: 2,
+							fillOpacity: 0.3,
+							fillColor: "#ffffff",
+						});
+						intersectingPolygon.setMap(map);
+						window.intersectingPolygons.push(intersectingPolygon);
 						window.duration.push(Date.now() - window.start);
 						console.log(window.duration[window.duration.length - 1]);
-						return {
-							type: "Feature",
-							geometry: {
-								type: "Polygon",
-								coordinates: result.rings,
-							},
-							properties: {
-								stroke: "#ff0000",
-								fill: "#ffffff",
-							},
-						};
+						// return {
+						// 	type: "Feature",
+						// 	geometry: {
+						// 		type: "Polygon",
+						// 		coordinates: result.rings,
+						// 	},
+						// 	properties: {
+						// 		stroke: "#ff0000",
+						// 		fill: "#ffffff",
+						// 	},
+						// };
 
 						//DRAW INTERSECTING POLYGONS & ITS AREA
 

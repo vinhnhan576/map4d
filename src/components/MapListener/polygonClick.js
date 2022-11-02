@@ -2,11 +2,11 @@
 import gridSearch from "../../utils/gridSearch";
 
 const polygonClick = (args, map) => {
-	// if (window.intersectingPolygons.length !== 0)
-	// 	window.intersectingPolygons.map((intersectingPolygon) =>
-	// 		intersectingPolygon.setMap(null)
-	// 	);
-	// window.intersectingPolygons = [];
+	if (window.intersectingPolygons.length !== 0)
+		window.intersectingPolygons.map((intersectingPolygon) =>
+			intersectingPolygon.setMap(null)
+		);
+	window.intersectingPolygons = [];
 	// if (window.features !== undefined)
 	// 	window.features.forEach((feature) => map.data.remove(feature));
 	if (window.dbclick) {

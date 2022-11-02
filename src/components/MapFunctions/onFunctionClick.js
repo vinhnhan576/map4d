@@ -7,10 +7,10 @@ const onFunctionClick = (functionIndex, map) => {
 	window.polylineMarkers.map((marker) => marker.setMap(null));
 	window.path = [];
 	window.polygon.setMap(null);
-	// if (window.intersectingPolygons.length !== 0)
-	// 	window.intersectingPolygons.map((intersectingPolygon) =>
-	// 		intersectingPolygon.setMap(null)
-	// 	);
+	if (window.intersectingPolygons.length !== 0)
+		window.intersectingPolygons.map((intersectingPolygon) =>
+			intersectingPolygon.setMap(null)
+		);
 	if (window.features !== undefined)
 		map.data.clear();
 
